@@ -1,0 +1,3 @@
+[submodule "lib/STALKER-X"]
+	path = lib/STALKER-X
+	url = https://github.com/SSYGEN/STALKER-X.git
