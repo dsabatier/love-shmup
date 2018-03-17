@@ -1,16 +1,21 @@
-Game = {}
+require("Class/Bullet")
+require("Class/BulletManager")
+require("Class/Enemy")
+require("Class/Player")
+Color = require("Class/Color")
+
+local Game = {}
 
 function Game:enter()
   Settings = Settings()
-  newEnemy = Enemy(10, {r = 255, g = 255, b = 255}, Vector(0, 0))
-  player = Player(25, 15, Color(255, 0, 0), Vector(Settings.window.width / 2, Settings.window.height-30))
-  bulletManager = BulletManager()
+  player = Player(Vector(25, 15), Color(255, 0, 0), Vector(Settings.window.width / 2, Settings.window.height-30))
+  playerBulletManager = BulletManager()
 end
 
 function Game:update(dt)
-  local input = playerInput()
-  player:move(input, dt)
-  bulletManager:update(dt)
+  playerBulletManager:update(dt)
+  player:update(playerInput(), dt)
+
 end
 
 function Game:draw()
@@ -18,9 +23,9 @@ function Game:draw()
     love.graphics.setColor(255, 255, 255, 125)
     love.graphics.rectangle("line", 0, Settings.window.height-200, Settings.window.width, 200)
   end
-  newEnemy:draw()
+
+  playerBulletManager:draw()
   player:draw()
-  --bullet:draw()
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -35,18 +40,23 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 end
 
 function playerInput()
-  local input = Vector(0, 0)
+  local input = {}
+  input.direction = Vector(0, 0)
+  input.firing = love.keyboard.isDown('space')
+
   if love.keyboard.isDown('left') then
-    input.x = -1
+    input.direction.x = -1
   elseif love.keyboard.isDown('right') then
-    input.x =  1
+    input.direction.x =  1
   end
 
   if love.keyboard.isDown('up') then
-    input.y = -1
+    input.direction.y = -1
   elseif love.keyboard.isDown('down') then
-    input.y =  1
+    input.direction.y =  1
   end
 
   return input
 end
+
+return Game

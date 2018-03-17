@@ -1,4 +1,4 @@
-Color = Class{}
+local Color = Class{}
 
 function Color:init(r, g, b, a)
   self.r = r
@@ -6,3 +6,5 @@ function Color:init(r, g, b, a)
   self.b = b
   if a ~= nil then self.a = a else a = 255 end
 end
+
+return Color

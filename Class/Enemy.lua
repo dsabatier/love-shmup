@@ -2,18 +2,15 @@ Enemy = Class {}
 
 function Enemy:init(size, color, position)
   self.size = size
-  self.color = {
-    r = color.r,
-    g = color.g,
-    b = color.b
-  }
-  self.position = {
-    x = position.x,
-    y = position.y
-  }
+  self.color = color
+  self.position = position
 end
 
 function Enemy:move()
+
+end
+
+function Enemy:update(dt)
 
 end
 

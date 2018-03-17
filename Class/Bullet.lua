@@ -1,11 +1,11 @@
 Bullet = Class{}
 
 function Bullet:init(position, direction, speed, size, color)
+  self.position = position
   self.direction = direction
   self.speed = speed
   self.size = size
   self.color = color
-  self.position = position
 end
 
 function Bullet:draw()
@@ -13,8 +13,13 @@ function Bullet:draw()
   love.graphics.rectangle("fill", self.position.x, self.position.y, self.size.x, self.size.y)
 end
 
-function Bullet:update(dt)
+function Bullet:update(bulletManager, index, dt)
   self:move(dt)
+
+  if self.position.y < 0 or self.position.x < 0 or self.position.x > Settings.window.width then
+    table.remove(bulletManager.bullets, index)
+  end
+
 end
 
 function Bullet:move(dt)
