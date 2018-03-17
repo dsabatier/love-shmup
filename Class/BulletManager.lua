@@ -1,3 +1,5 @@
+require("Class/Bullet")
+
 BulletManager = Class{}
 
 function BulletManager:init()

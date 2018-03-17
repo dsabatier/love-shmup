@@ -1,42 +1,54 @@
-require("Class/Bullet")
 require("Class/BulletManager")
-require("Class/Enemy")
+require("Class/EnemyManager")
 require("Class/Player")
-Color = require("Class/Color")
+
 
 local Game = {}
 
 function Game:enter()
-  Settings = Settings()
-  player = Player(Vector(25, 15), Color(255, 0, 0), Vector(Settings.window.width / 2, Settings.window.height-30))
+  player = Player()
   playerBulletManager = BulletManager()
+  enemyBulletManager = BulletManager()
+  enemyManager = EnemyManager()
+  enemyManager:spawnEnemy(Vector(Settings.window.width * 0.5 - 25, 100), Vector(30, 30), Colors.green)
+
+  --cameraX = camera.x
+  --cameraY = camera.y
+
+  camera:setFollowLerp(0.9)
+  camera:setFollowStyle('LOCKON')
+  camera:follow(Settings.window.width/2, Settings.window.height/2)
+ 
 end
 
 function Game:update(dt)
+  -- these should probably all go into an Entities class? idk what I'm doing send help
+  camera:update(dt)
   playerBulletManager:update(dt)
-  player:update(playerInput(), dt)
-
+  enemyManager:update(dt)
+  player:update(playerInput(), dt) --TODO: create static input class, dont pass this in.
 end
 
 function Game:draw()
+    -- background
+  camera:attach()
+  love.graphics.setColor(0, 0, 0, 0)
+  love.graphics.rectangle("fill", 0, 0, Settings.window.width, Settings.window.height)
+
   if Settings.debug == true then
     love.graphics.setColor(255, 255, 255, 125)
     love.graphics.rectangle("line", 0, Settings.window.height-200, Settings.window.width, 200)
   end
 
   playerBulletManager:draw()
+  enemyManager:draw()
   player:draw()
+  camera:detach()
+
 end
 
 function love.keypressed(key, scancode, isrepeat)
-
-end
-
-function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
-  return x1 < x2+w2 and
-         x2 < x1+w1 and
-         y1 < y2+h2 and
-         y2 < y1+h1
+  -- watch for pause
 end
 
 function playerInput()
@@ -44,15 +56,15 @@ function playerInput()
   input.direction = Vector(0, 0)
   input.firing = love.keyboard.isDown('space')
 
-  if love.keyboard.isDown('left') then
+  if love.keyboard.isDown('left') or love.keyboard.isDown("a") then
     input.direction.x = -1
-  elseif love.keyboard.isDown('right') then
+  elseif love.keyboard.isDown('right') or love.keyboard.isDown("d") then
     input.direction.x =  1
   end
 
-  if love.keyboard.isDown('up') then
+  if love.keyboard.isDown('up') or love.keyboard.isDown("w") then
     input.direction.y = -1
-  elseif love.keyboard.isDown('down') then
+  elseif love.keyboard.isDown('down') or love.keyboard.isDown("s") then
     input.direction.y =  1
   end
 

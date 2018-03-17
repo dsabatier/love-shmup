@@ -5,3 +5,5 @@ function Settings:init()
   self.window = {}
   self.window.width, self.window.height = love.window.getMode()
 end
+
+return Settings

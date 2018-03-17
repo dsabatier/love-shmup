@@ -9,7 +9,7 @@ function Bullet:init(position, direction, speed, size, color)
 end
 
 function Bullet:draw()
-  love.graphics.setColor(self.color.r, self.color.g, self.color.b)
+  love.graphics.setColor(self.color.r, self.color.g, self.color.b, 255)
   love.graphics.rectangle("fill", self.position.x, self.position.y, self.size.x, self.size.y)
 end
 
