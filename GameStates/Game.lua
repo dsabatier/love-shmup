@@ -11,27 +11,16 @@ function Game:enter()
   enemyBulletManager = BulletManager()
   enemyManager = EnemyManager()
   enemyManager:spawnEnemy(Vector(Settings.window.width * 0.5 - 25, 100), Vector(30, 30), Colors.green)
-
-  --cameraX = camera.x
-  --cameraY = camera.y
-
-  camera:setFollowLerp(0.9)
-  camera:setFollowStyle('LOCKON')
-  camera:follow(Settings.window.width/2, Settings.window.height/2)
- 
 end
 
 function Game:update(dt)
   -- these should probably all go into an Entities class? idk what I'm doing send help
-  camera:update(dt)
   playerBulletManager:update(dt)
   enemyManager:update(dt)
   player:update(playerInput(), dt) --TODO: create static input class, dont pass this in.
 end
 
 function Game:draw()
-    -- background
-  camera:attach()
   love.graphics.setColor(0, 0, 0, 0)
   love.graphics.rectangle("fill", 0, 0, Settings.window.width, Settings.window.height)
 
@@ -43,8 +32,6 @@ function Game:draw()
   playerBulletManager:draw()
   enemyManager:draw()
   player:draw()
-  camera:detach()
-
 end
 
 function love.keypressed(key, scancode, isrepeat)

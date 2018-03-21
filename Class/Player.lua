@@ -100,6 +100,7 @@ function Player:move(input, dt)
 end
 
 function Player:fire()
+
   self.cooldownTimer = 0
   local bulletPosition = {}
   bulletPosition.x = self.position.x + (self.size.x * 0.5) - 2.5 -- minus half the bullet size
@@ -117,9 +118,8 @@ function Player:fire()
       randomFactor = math.random(0, 2) * (self.spinupCount * 0.01) * fireDirection
     end
   end
-  print(randomFactor)
-  playerBulletManager:spawnBullet(bulletPosition, Vector(randomFactor, 1):normalized(), -250, Vector(5, 5), Color(255, 255, 255))
+
+  playerBulletManager:spawnBullet(bulletPosition, Vector(randomFactor, 1):normalized(), -450, Vector(5, 5), Colors.yellow)
   love.audio.play(self.audio.fire())
   self.lastFireDirection = fireDirection
-
 end

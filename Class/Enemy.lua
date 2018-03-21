@@ -35,5 +35,5 @@ end
 
 function Enemy:takeDamage()
   love.audio.play(self.audio.hit())
-  camera:shake(4, 0.5, 120)
+  --camera:shake(4, 0.5, 120)
 end
