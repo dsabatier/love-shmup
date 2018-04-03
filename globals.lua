@@ -1,7 +1,4 @@
-Color = require("Class/Color")
-
--- the pico 8 color palette as outline here: https://www.romanzolotarev.com/pico-8-color-palette/
-local Colors = Class{
+Colors = {
     darkBlue = Color(29, 43, 83),
     darkPurple = Color(126, 37, 83),
     darkGreen = Color(0, 135, 81),
@@ -19,5 +16,3 @@ local Colors = Class{
     peach = Color(255, 204, 170),
     yellow = Color(255, 236, 39)
 }
-
-return Colors
